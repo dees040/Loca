@@ -1,8 +1,8 @@
 {
-  "name": "dees040/Loca",
+  "name": "dees040/loca",
   "description": "Localization class for easy translation management.",
   "keywords": ["loca", "locale", "localization"],
-  "homepage": "https://github.com/dees040/Loca",
+  "homepage": "https://github.com/dees040/loca",
   "authors": [
     {
       "name": "Dees Oomens",
@@ -12,7 +12,7 @@
   "license" : "MIT",
   "autoload": {
     "psr-0": {
-      "dees040\\Loca": "src/"
+      "dees040\\loca": "src/"
     }
   }
 }

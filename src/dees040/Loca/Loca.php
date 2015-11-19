@@ -1,8 +1,8 @@
 <?php
 
-namespace dees040\Loca;
+namespace dees040\loca;
 
-class Loca {
+class loca {
 
     /**
      * A list with all the country codes
