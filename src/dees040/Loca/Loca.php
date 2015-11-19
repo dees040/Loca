@@ -4,14 +4,32 @@ namespace dees040\Loca;
 
 class Loca {
 
+    /**
+     * A list with all the country codes
+     *
+     * @var array
+     */
     static private $countryCodes = [];
 
-    static private $currentDir;
-
+    /**
+     * Main language to use
+     *
+     * @var string
+     */
     static private $locale = 'en';
 
+    /**
+     * Fallback language to use if main languages fails
+     *
+     * @var string
+     */
     static private $fallbackLocale = 'en';
 
+    /**
+     * Directory with all the language files
+     *
+     * @var
+     */
     static private $langDir;
 
     /**
@@ -21,9 +39,9 @@ class Loca {
      */
     static public function prepare(array $parameters = [])
     {
-        self::$currentDir = realpath(dirname(__FILE__));
+        $currentDir = realpath(dirname(__FILE__));
 
-        self::$countryCodes = include self::$currentDir . '\CountryCodes.php';
+        self::$countryCodes = include $currentDir . '\CountryCodes.php';
 
         if (array_key_exists('locale', $parameters)) {
             self::$locale = $parameters['locale'];
@@ -36,7 +54,7 @@ class Loca {
         if (array_key_exists('langDir', $parameters)) {
             self::$langDir = $parameters['langDir'];
         } else {
-            self::$langDir = self::$currentDir . '\languages';
+            self::$langDir = $currentDir . '\languages';
         }
     }
 
@@ -204,6 +222,5 @@ class Loca {
         }
         return $output;
     }
-
 
 }

@@ -1,5 +1,6 @@
 <?php
 
 return [
-  'welcome' => 'Hallo :name'
+    'welcome' => 'Hallo :name',
+    'info' => 'Hier kunt u informatie vinden',
 ];
