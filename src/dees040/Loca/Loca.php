@@ -1,8 +1,8 @@
 <?php
 
-namespace dees040\loca;
+namespace dees040\Loca;
 
-class loca {
+class Loca {
 
     /**
      * A list with all the country codes
@@ -44,11 +44,11 @@ class loca {
         self::$countryCodes = include $currentDir . '\CountryCodes.php';
 
         if (array_key_exists('locale', $parameters)) {
-            self::$locale = $parameters['locale'];
+            self::$locale = strtolower($parameters['locale']);
         }
 
         if (array_key_exists('fallbackLocale', $parameters)) {
-            self::$fallbackLocale = $parameters['fallbackLocale'];
+            self::$fallbackLocale = strtolower($parameters['fallbackLocale']);
         }
 
         if (array_key_exists('langDir', $parameters)) {
