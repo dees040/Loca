@@ -1,7 +1,7 @@
 Loca
 ====
 
-Created a class for handling translations. I though maybe somebody find this useful.
+Created a class for handling translations. I though maybe somebody finds this useful.
 
 Table of contents
 -----------------
