@@ -44,17 +44,34 @@ class Loca {
         self::$countryCodes = include $currentDir . '\CountryCodes.php';
 
         if (array_key_exists('locale', $parameters)) {
-            self::$locale = strtolower($parameters['locale']);
+            self::setLocale(strtolower($parameters['locale']));
         }
 
         if (array_key_exists('fallbackLocale', $parameters)) {
-            self::$fallbackLocale = strtolower($parameters['fallbackLocale']);
+            self::setLocale(strtolower($parameters['fallbackLocale']), 1);
         }
 
         if (array_key_exists('langDir', $parameters)) {
             self::$langDir = $parameters['langDir'];
         } else {
             self::$langDir = $currentDir . '\languages';
+        }
+    }
+
+    /**
+     * Set the locale by hand.
+     *
+     * @param string $locale
+     * @param int $type - type 0 = main locale, type 1 = fallback locale
+     */
+    static public function setLocale($locale, $type = 0)
+    {
+        self::sessionHandler();
+
+        if ($type === 0) {
+            self::$locale = $_SESSION['Loca']['locale'] = $locale;
+        } else if ($type === 1) {
+            self::$fallbackLocale = $_SESSION['Loca']['fallbackLocale'] = $locale;
         }
     }
 
@@ -84,6 +101,8 @@ class Loca {
      */
     private function getTranslation($id)
     {
+        self::sessionHandler();
+
         list($file, $key) = explode('.', $id);
 
         $file .= '.php';
@@ -126,7 +145,8 @@ class Loca {
      */
     private function getMainLangDir()
     {
-        return self::$langDir . '\\' . self::$locale;
+        return self::$langDir . '\\' .
+            (isset($_SESSION['Loca']['locale'])) ? $_SESSION['Loca']['locale'] : self::$locale;
     }
 
     /**
@@ -136,7 +156,8 @@ class Loca {
      */
     private function getFallbackLangDir()
     {
-        return self::$langDir . '\\' . self::$fallbackLocale;
+        return self::$langDir . '\\' .
+            (isset($_SESSION['Loca']['fallbackLocale'])) ? $_SESSION['Loca']['fallbackLocale'] : self::$fallbackLocale;
     }
 
     static public function visitorCountry($ip = "Visistor")
@@ -151,6 +172,9 @@ class Loca {
      * ----------------------------------------------------------------------------------- */
 
     /**
+     * Get country name by country code.
+     * Check the country list in CountryCodes.php
+     *
      * @param $code
      * @return string|FALSE
      */
@@ -164,6 +188,9 @@ class Loca {
     }
 
     /**
+     * Get country code by full country name.
+     * Check the country list in CountryCodes.php
+     *
      * @param $country
      * @return string|FALSE
      */
@@ -221,6 +248,11 @@ class Loca {
             }
         }
         return $output;
+    }
+
+    private function sessionHandler()
+    {
+        @session_start();
     }
 
 }
